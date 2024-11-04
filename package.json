@@ -1,5 +1,17 @@
 {
+  "name": "ca1-carparts",
+  "version": "1.0.0",
+  "description": "Car parts API",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "serve": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Manu Jose",
+  "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
