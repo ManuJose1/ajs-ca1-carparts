@@ -3,10 +3,11 @@ const bcrypt = require('bcrypt');
 const User = require('../models/user.model');
 
 const register = (req, res) => {
-    console.log(req.body);
 
     let newUser = new User(req.body);
     newUser.password = bcrypt.hashSync(req.body.password, 10);
+    //console.log(req.body);
+    //console.log(newUser);
 
     newUser.save()
            .then(data => {
@@ -21,6 +22,7 @@ const register = (req, res) => {
 };
 
 const login = (req, res) => {
+    console.log(res.body);
     User.findOne({email: req.body.email})
         .then(user => {
             if(!user || !user.comparePassword(request.body.password)){
@@ -33,11 +35,11 @@ const login = (req, res) => {
                     email:  user.email,
                     full_name: user.full_name,
                     _id: user._id
-                }, 'mykey')
+                },  process.env.APP_KEY)
             })
         })
         .catch(err => {
-            res.status(500).json(err);
+            res.status(500).json(res);
         });
 };
 
