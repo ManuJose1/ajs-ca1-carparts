@@ -41,6 +41,7 @@ const login = (req, res) => {
         .catch(err => {
             res.status(500).json(res);
         });
+        
 };
 
 const loginRequired = (req, res, next) => {
