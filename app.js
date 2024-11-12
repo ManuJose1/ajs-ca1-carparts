@@ -8,6 +8,7 @@ if(process.env.ENVIRONMENT !== "testing"){
     require('./utils/db').connect();
 }
 
+app.use(cors());
 app.use(express.json());
 app.use(express.static(__dirname + '/views/'));
 

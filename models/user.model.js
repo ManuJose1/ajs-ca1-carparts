@@ -1,11 +1,12 @@
 const {Schema, model} = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const validateEmail = (email) => {
     let regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     return regex.test(email);
 };
 
-const userSchema = new Schema({
+const userSchema = Schema({
     full_name: {
         type: String,
         required: true,
@@ -28,7 +29,7 @@ const userSchema = new Schema({
 },{timestamps:true});
 
 userSchema.methods.comparePassword = function(password){
-    return bcrypt.compareSync(passowrd, this.password, function(){
+    return bcrypt.compareSync(password, this.password, function(){
         return result;
     });
 };

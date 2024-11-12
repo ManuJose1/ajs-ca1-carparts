@@ -7,9 +7,15 @@ const Location = require('../models/location.model');
 const users = [
     {
         full_name:'Manu Jose',
-        email:'manu@mail.com',
+        email:'admin@email.com',
+        password:'secret'
+    },
+    {
+        full_name:'Jon Jones',
+        email:'jon@email.com',
         password:'secret'
     }
+
 ];
 
 const parts = [
