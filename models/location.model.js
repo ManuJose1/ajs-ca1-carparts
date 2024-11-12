@@ -20,7 +20,7 @@ const locationSchema = new Schema({
     part: {
         type: Schema.Types.ObjectId,
         ref: 'Part',
-        required: [true, 'Part is required']
+       // required: [true, 'Part is required']
     },
     image_path: {
         type: String,

@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { connect, disconnect } = require('./utils/db');
+const { connect, disconnect } = require('../utils/db');
 const User = require('../models/user.model');
 const Part = require('../models/part.model');
 const Location = require('../models/location.model');
@@ -63,18 +63,14 @@ const locations = [
         address:'11 Ross Road, Ashford, Co. Wicklow',
         email:'support@joescars.ie',
         phone:'01 4549462',
-        part:[
-            {id:parts._id}
-        ]
+     //   part:
     },
     {
         title:"EastCoast Mechanics",
         address:'24 Bray Business Park, Bray, Co. Wicklow',
         email:'info@ecoastmech.org',
         phone:'01 ',
-        part:[
-            {id:parts._id}
-        ]
+      //  part:
     },
 ]
 

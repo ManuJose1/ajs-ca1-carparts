@@ -22,27 +22,26 @@ const register = (req, res) => {
 };
 
 const login = (req, res) => {
-    console.log(res.body);
-    User.findOne({email: req.body.email})
+    User.findOne({ email: req.body.email})
         .then(user => {
-            if(!user || !user.comparePassword(request.body.password)){
-                res.status(401).json({
-                    message:'Authentication failed. Invalid user'
-                });
+            if(!user || !user.comparePassword(req.body.password)) { 
+                return res.status(401).json({
+                    message: 'Authentication failed. Invalid user'
+                })
             }
+
             return res.status(200).json({
                 token: jwt.sign({
-                    email:  user.email,
+                    email: user.email,
                     full_name: user.full_name,
                     _id: user._id
-                },  process.env.APP_KEY)
-            })
+                }, 'mykey') 
+              });
         })
         .catch(err => {
-            res.status(500).json(res);
-        });
-        
-};
+            return res.status(500).json(err);
+        })
+}
 
 const loginRequired = (req, res, next) => {
     if(req.user){
