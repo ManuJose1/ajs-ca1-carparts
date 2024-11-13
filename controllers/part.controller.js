@@ -1,5 +1,23 @@
 const Part = require('../models/part.model');
+const fs = require('fs');
 
+const deleteImage = (filename) => {
+    let path = `public/uploads/${filename}`;
+    fs.access(path, fs.constants.F_OK,(err)=>{
+        if(err){
+            console.error(err);
+            return;
+        }
+        fs.unlink(path, err => {
+            if(err){
+                console.error(err);
+                return;
+            }
+
+            console.log(`${filename} was deleted`)
+        })
+    })
+}
 const readAll = (req, res) => {
 
     Part.find()
@@ -60,6 +78,10 @@ const createData = (req, res) => {
     console.log(req.body);
     let body = req.body;
 
+    if(req.file){
+        carData.image_path = process.env.STORAGE_ENGINE ==='S3' ? req.file.key : req.file.filename;
+    }
+
     Part.create(body)
         .then(data => {
             console.log(`New part created`, data);
@@ -89,6 +111,10 @@ const createData = (req, res) => {
 const updateData = (req, res) => {
     let id = req.params.id;
     let body = req.body;
+
+    if(req.file){
+        body.image_path = process.env.STORAGE_ENGINE ==='S3' ? req.file.key : req.file.filename;
+    }
 
     Part.findByIdAndUpdate(id, body, {
         new: true,

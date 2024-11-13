@@ -8,12 +8,12 @@ const users = [
     {
         full_name:'Manu Jose',
         email:'admin@email.com',
-        password:'secret'
+        password: bcrypt.hashSync("Secret123", 10),
     },
     {
         full_name:'Jon Jones',
         email:'jon@email.com',
-        password:'secret'
+        password: bcrypt.hashSync("Secret123", 10),
     }
 
 ];
