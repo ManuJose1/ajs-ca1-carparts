@@ -17,10 +17,6 @@ const readAll = (req, res) => {
             console.log(err);
             return res.status(500).json(err);
         });
-
-    // res.status(200).json({
-    //     "message": "All Locations retrieved"
-    // });
 };
 
 const readOne = (req, res) => {
@@ -50,10 +46,6 @@ const readOne = (req, res) => {
 
             return res.status(500).json(err);
         });
-
-    // res.status(200).json({
-    //     "message": `Location with id: ${id} retrieved`
-    // });
 };
 
 const createData = (req, res) => {
@@ -78,12 +70,6 @@ const createData = (req, res) => {
 
             return res.status(500).json(err);
         });
-
-
-    // return res.status(201).json({
-    //     "message": "All good",
-    //     data
-    // });
 };
 
 const updateData = (req, res) => {
@@ -123,25 +109,10 @@ const updateData = (req, res) => {
 
         return res.status(500).json(err);
     });
-
-    // connect to db and check if user exists
-    // check if data is valid, if yes update user with :id
-
-
-
-    // data.id = id;
-
-    // res.status(200).json({
-    //     "message": `You updated location with id: ${id}`,
-    //     data
-    // });
-
 };
 
 const deleteData = (req, res) => {
     let id = req.params.id;
-
-    // connect to db, check if user exists, if yes delete user
 
     Location.findByIdAndDelete(id)
         .then(data => {
@@ -165,10 +136,6 @@ const deleteData = (req, res) => {
 
             return res.status(500).json(err);
         });
-
-    // res.status(200).json({
-    //     "message": `You deleted location with id: ${id}`
-    // });
 };
 
 module.exports = {

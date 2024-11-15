@@ -6,50 +6,57 @@ const register = (req, res) => {
 
     let newUser = new User(req.body);
     newUser.password = bcrypt.hashSync(req.body.password, 10);
-    //console.log(req.body);
-    //console.log(newUser);
 
-    newUser.save()
-           .then(data => {
-                data.password = undefined;
-                return res.status(201).json(data);
-           })
-           .catch(err => {
-                return res.status(400).json({
-                    message: err
+    newUser.save((err, user) => {
+        if (err) {
+            return res.status(400).json({
+                msg: err
             });
-           });
+        } else {
+            user.password = undefined;
+            return res.status(201).json(user);
+        }
+    });
 };
 
 const login = (req, res) => {
-    User.findOne({ email: req.body.email})
-        .then(user => {
-            if(!user || !user.comparePassword(req.body.password)) { 
-                return res.status(401).json({
-                    message: 'Authentication failed. Invalid user'
-                })
-            }
+    User.findOne({
+        email: req.body.email
+    })
+        .then((user) => {
+            if (!user || !user.comparePassword(req.body.password)) {
+                res.status(401).json({
+                    msg: 'Authentication failed. Invalid user or password'
+                });
+            } else {
+                let token = jwt.sign(
+                    {
+                        email: user.email,
+                        name: user.name,
+                        _id: user._id
+                    },
+                    process.env.APP_KEY
+                );
 
-            return res.status(200).json({
-                token: jwt.sign({
-                    email: user.email,
-                    full_name: user.full_name,
-                    _id: user._id
-                }, 'mykey') 
-              });
+                req.user = true
+
+                res.status(200).json({
+                    msg: 'All good',
+                    token
+                });
+            }
         })
-        .catch(err => {
-            console.log(err);
-            return res.status(500).json(err);
-        })
-}
+        .catch((err) => {
+            throw err;
+        });
+};
 
 const loginRequired = (req, res, next) => {
     if(req.user){
         next();
     } else {
-        return res.status(401).json({
-            message:'Unauthorized user'
+        res.status(401).json({
+            msg: 'Unauthorised user!!'
         });
     }
 }

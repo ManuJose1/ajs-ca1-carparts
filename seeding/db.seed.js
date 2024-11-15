@@ -3,21 +3,24 @@ const { connect, disconnect } = require('../utils/db');
 const User = require('../models/user.model');
 const Part = require('../models/part.model');
 const Location = require('../models/location.model');
+const bcrypt = require('bcrypt');
 
+//User data
 const users = [
     {
         full_name:'Manu Jose',
         email:'admin@email.com',
-        password: bcrypt.hashSync("Secret123", 10),
+        password: bcrypt.hashSync("password", 10),
     },
     {
         full_name:'Jon Jones',
         email:'jon@email.com',
-        password: bcrypt.hashSync("Secret123", 10),
+        password: bcrypt.hashSync("secret", 10),
     }
 
 ];
 
+//Parts data
 const parts = [
     {
         title:'Brembo Front Brake Pads',
@@ -63,6 +66,7 @@ const parts = [
     },
 ];
 
+//Locations data
 const locations = [
     {
         title:"Joe's Car Parts",
@@ -75,7 +79,7 @@ const locations = [
         title:"EastCoast Mechanics",
         address:'24 Bray Business Park, Bray, Co. Wicklow',
         email:'info@ecoastmech.org',
-        phone:'01 ',
+        phone:'01 2739836',
       //  part:
     },
 ]

@@ -35,10 +35,6 @@ const readAll = (req, res) => {
             console.log(err);
             return res.status(500).json(err);
         });
-
-    // res.status(200).json({
-    //     "message": "All Parts retrieved"
-    // });
 };
 
 const readOne = (req, res) => {
@@ -46,16 +42,20 @@ const readOne = (req, res) => {
 
     Part.findById(id)
         .then(data => {
-            if(!data){
-                return res.status(404).json({
-                    message: `Part with id: ${id} not found`
+
+            if(data){
+               // data.image_path = process.env.IMAGE_URL + data.image_path;
+                res.status(200).json({
+                    "message": `Part with id: ${id} not found`,
+                    data
                 });
             }
-
-            return res.status(200).json({
-                message: `Part with id: ${id} retrieved`,
-                data
-            });
+            else {
+                res.status(404).json({
+                    "message": `Part with id: ${id} not found`
+                });
+            }
+            
         })
         .catch(err => {
             console.log(err);
@@ -68,19 +68,15 @@ const readOne = (req, res) => {
 
             return res.status(500).json(err);
         });
-
-    // res.status(200).json({
-    //     "message": `Part with id: ${id} retrieved`
-    // });
 };
 
 const createData = (req, res) => {
     console.log(req.body);
     let body = req.body;
 
-    if(req.file){
-        carData.image_path = process.env.STORAGE_ENGINE ==='S3' ? req.file.key : req.file.filename;
-    }
+    // if(req.file){
+    //     body.image_path = process.env.STORAGE_ENGINE ==='S3' ? req.file.key : req.file.filename;
+    // }
 
     Part.create(body)
         .then(data => {
@@ -100,21 +96,15 @@ const createData = (req, res) => {
 
             return res.status(500).json(err);
         });
-
-
-    // return res.status(201).json({
-    //     "message": "All good",
-    //     data
-    // });
-};
+    };
 
 const updateData = (req, res) => {
     let id = req.params.id;
     let body = req.body;
 
-    if(req.file){
-        body.image_path = process.env.STORAGE_ENGINE ==='S3' ? req.file.key : req.file.filename;
-    }
+    // if(req.file){
+    //     body.image_path = process.env.STORAGE_ENGINE ==='S3' ? req.file.key : req.file.filename;
+    // }
 
     Part.findByIdAndUpdate(id, body, {
         new: true,
@@ -142,25 +132,10 @@ const updateData = (req, res) => {
 
         return res.status(500).json(err);
     });
-
-    // connect to db and check if user exists
-    // check if data is valid, if yes update user with :id
-
-
-
-    // data.id = id;
-
-    // res.status(200).json({
-    //     "message": `You updated part with id: ${id}`,
-    //     data
-    // });
-
 };
 
 const deleteData = (req, res) => {
     let id = req.params.id;
-
-    // connect to db, check if user exists, if yes delete user
 
     Part.findByIdAndDelete(id)
         .then(data => {
@@ -174,6 +149,14 @@ const deleteData = (req, res) => {
                 message: `Part with id: ${id} deleted`
             });
         })
+        // .then(()=>{
+        //     if(filename){
+        //         deleteImage(filename);
+        //     }
+        //     return res.status(200).json({
+        //         message:`Part with id ${id} deleted successfully`
+        //     })
+        // })
         .catch(err => {
 
             if(err.name === 'CastError'){
@@ -184,10 +167,6 @@ const deleteData = (req, res) => {
 
             return res.status(500).json(err);
         });
-
-    // res.status(200).json({
-    //     "message": `You deleted part with id: ${id}`
-    // });
 };
 
 module.exports = {

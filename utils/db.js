@@ -18,11 +18,6 @@ const connect = async () => {
         db = mongoose.connection;
     } catch (error) {
         console.log(error);
-    } finally {
-        if (db !== null && db.readyState === 1) {
-            // await db.close();
-            // console.log("Disconnected successfully from db");
-        }
     }
 };
 

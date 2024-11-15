@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const imageUpload = require('../utils/imageUpoad');
 
 const { 
     readAll, 
@@ -13,8 +14,9 @@ const { loginRequired } = require('../controllers/user.controller');
 
 
 router.get('/', readAll);
-//redOne is protected and requires the uesr to be logged in
-router.get('/:id', loginRequired, readOne);
+router.get('/:id', readOne);
+// router.post('/', imageUpload.single('image'), createData);
+// router.put('/:id', imageUpload.single('image'), updateData);
 router.post('/', createData);
 router.put('/:id', updateData);
 router.delete('/:id', deleteData);
