@@ -45,10 +45,7 @@ const readOne = (req, res) => {
 
             if(data){
                // data.image_path = process.env.IMAGE_URL + data.image_path;
-                res.status(200).json({
-                    "message": `Part with id: ${id} not found`,
-                    data
-                });
+                res.status(200).json(data);
             }
             else {
                 res.status(404).json({
